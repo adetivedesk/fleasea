@@ -3,7 +3,7 @@
  * (spec §20–§23, §28). Frontend simulation only.
  */
 import { ORDER_STATUS, PAYMENT_STATUS, PAYMENT_TERM } from '@/constants';
-import { MOCK_SETTINGS } from '@/data/settings';
+import { getSettings } from '@/data/settings';
 import { buildCartTotals } from '@/utils/orderCalc';
 import { makeOrderNumber, uid } from '@/utils/id';
 import { orderService } from './orderService';
@@ -39,7 +39,7 @@ export interface PlaceOrderInput {
 export async function placeOrder(input: PlaceOrderInput): Promise<Order> {
   const totals = buildCartTotals(input.items, input.products, input.currency, input.currencies);
   const existing = await orderService.list();
-  const seq = MOCK_SETTINGS.orderNumberSeqStart + existing.length;
+  const seq = getSettings().orderNumberSeqStart + existing.length;
   const number = makeOrderNumber(seq);
   const now = new Date().toISOString();
 

@@ -25,6 +25,8 @@ export const en = {
   'nav.profile': 'Company Profile',
   'nav.notifications': 'Notifications',
   'nav.logout': 'Logout',
+  'area.merchant': 'Merchant Portal',
+  'area.admin': 'Admin Console',
 
   'nav.admin.dashboard': 'Dashboard',
   'nav.admin.products': 'Fish Products',
@@ -99,6 +101,8 @@ export const ar: Record<TranslationKey, string> = {
   'nav.profile': 'ملف الشركة',
   'nav.notifications': 'الإشعارات',
   'nav.logout': 'تسجيل الخروج',
+  'area.merchant': 'بوابة التاجر',
+  'area.admin': 'وحدة تحكم المدير',
 
   'nav.admin.dashboard': 'لوحة التحكم',
   'nav.admin.products': 'منتجات الأسماك',

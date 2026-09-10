@@ -16,6 +16,9 @@ export const STORAGE_KEYS = {
   SHIPMENTS: 'fleasea.shipments',
   DOCUMENTS: 'fleasea.documents',
   NOTIFICATIONS: 'fleasea.notifications',
+  SETTINGS: 'fleasea.settings',
+  USERS: 'fleasea.users',
+  ADMIN_ROLE: 'fleasea.adminRole',
   SEED_VERSION: 'fleasea.seedVersion',
 } as const;
 

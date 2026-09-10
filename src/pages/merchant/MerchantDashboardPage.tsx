@@ -100,7 +100,7 @@ export function MerchantDashboardPage() {
             <EmptyState title="You haven't placed any wholesale orders yet." action={<Button to="/merchant/products">Browse Fish</Button>} />
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full min-w-[600px] text-sm">
                 <thead>
                   <tr className="border-b border-ink-200 text-left text-xs uppercase tracking-wide text-ink-400">
                     <th className="px-4 py-2 font-medium">Order</th>

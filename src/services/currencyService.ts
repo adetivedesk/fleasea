@@ -25,4 +25,9 @@ export const currencyService = {
     );
     return delay(writeCollection(KEY, rows));
   },
+  add(currency: Currency): Promise<Currency[]> {
+    const rows = readCollection<Currency>(KEY, () => DEFAULT_CURRENCIES);
+    if (rows.some((c) => c.code === currency.code)) return delay(rows);
+    return delay(writeCollection(KEY, [...rows, currency]));
+  },
 };

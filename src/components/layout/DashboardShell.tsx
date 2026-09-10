@@ -5,9 +5,11 @@ import { useI18n } from '@/i18n';
 import { useApp } from '@/store/AppContext';
 import { useCart } from '@/store/CartContext';
 import type { NavItem } from '@/routes/navigation';
+import { canSeeNav, roleById } from '@/data/roles';
 import { cn } from '@/utils/cn';
 import { Logo } from './Logo';
 import { LanguageSelector, CurrencySelector } from './Selectors';
+import { NotificationBell } from './NotificationBell';
 
 interface Props {
   nav: NavItem[];
@@ -17,9 +19,12 @@ interface Props {
 
 export function DashboardShell({ nav, area, children }: Props) {
   const { t } = useI18n();
-  const { setDemoRole } = useApp();
+  const { setDemoRole, adminRole } = useApp();
   const cart = useCart();
   const [drawer, setDrawer] = useState(false);
+
+  const visibleNav =
+    area === 'admin' ? nav.filter((item) => canSeeNav(adminRole, item.to)) : nav;
 
   const itemCls = ({ isActive }: { isActive: boolean }) =>
     cn(
@@ -31,7 +36,7 @@ export function DashboardShell({ nav, area, children }: Props) {
 
   const navList = (
     <nav className="flex flex-col gap-0.5">
-      {nav.map((item) => (
+      {visibleNav.map((item) => (
         <NavLink
           key={item.to}
           to={item.to}
@@ -51,7 +56,7 @@ export function DashboardShell({ nav, area, children }: Props) {
     </nav>
   );
 
-  const areaLabel = area === 'admin' ? 'Admin Console' : 'Merchant Portal';
+  const areaLabel = area === 'admin' ? t('area.admin') : t('area.merchant');
 
   return (
     <div className="flex min-h-screen bg-ink-50">
@@ -105,7 +110,16 @@ export function DashboardShell({ nav, area, children }: Props) {
           <Link to={area === 'admin' ? '/admin' : '/merchant'} className="font-semibold text-ink-800">
             {areaLabel}
           </Link>
+          {area === 'admin' && (
+            <span className="hidden rounded-full bg-ink-100 px-2 py-0.5 text-xs font-medium text-ink-500 sm:inline">
+              {roleById(adminRole).name}
+            </span>
+          )}
           <div className="ms-auto flex items-center gap-2">
+            <NotificationBell
+              role={area === 'admin' ? 'admin' : 'merchant'}
+              to={area === 'admin' ? '/admin/notifications' : '/merchant/notifications'}
+            />
             <LanguageSelector />
             <CurrencySelector />
           </div>

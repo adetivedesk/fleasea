@@ -63,7 +63,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     <>
       {Icon && <Icon className="h-4 w-4 shrink-0" aria-hidden />}
       {children}
-      {IconRight && <IconRight className="h-4 w-4 shrink-0" aria-hidden />}
+      {IconRight && <IconRight className="h-4 w-4 shrink-0 flip-x" aria-hidden />}
     </>
   );
 

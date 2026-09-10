@@ -1,20 +1,48 @@
-import { PAYMENT_TERM } from '@/constants';
+import { PAYMENT_TERM, STORAGE_KEYS } from '@/constants';
+import { storage } from '@/utils/storage';
 import type { PaymentTerm } from '@/constants/status';
 
 /** Mock, configurable commercial settings (spec §20, §57). */
-export const MOCK_SETTINGS = {
+export interface FleaseaSettings {
   /** VAT rate applied to the goods subtotal. */
-  taxRate: 0.15,
+  taxRate: number;
   /** Flat indicative delivery fee, in SAR, per order. */
+  deliveryFeeSar: number;
+  orderNumberSeqStart: number;
+  orderNumberPrefix: string;
+  companyName: string;
+  supportEmail: string;
+}
+
+export const DEFAULT_SETTINGS: FleaseaSettings = {
+  taxRate: 0.15,
   deliveryFeeSar: 850,
   orderNumberSeqStart: 126,
+  orderNumberPrefix: 'FL',
+  companyName: 'Fleasea Trading Co.',
+  supportEmail: 'trade@fleasea.demo',
 };
+
+const KEY = STORAGE_KEYS.SETTINGS;
+
+export const getSettings = (): FleaseaSettings => ({
+  ...DEFAULT_SETTINGS,
+  ...storage.get<Partial<FleaseaSettings>>(KEY, {}),
+});
+
+export const saveSettings = (patch: Partial<FleaseaSettings>): FleaseaSettings => {
+  const next = { ...getSettings(), ...patch };
+  storage.set(KEY, next);
+  return next;
+};
+
+/** Back-compat alias — prefer getSettings(). */
+export const MOCK_SETTINGS = DEFAULT_SETTINGS;
 
 export interface PaymentTermDef {
   id: PaymentTerm;
   label: string;
   description: string;
-  /** Portions as fractions of the total, in settlement order. */
   schedule: Array<{ portion: string; fraction: number; trigger: string }>;
 }
 
@@ -45,3 +73,4 @@ export const PAYMENT_TERMS: PaymentTermDef[] = [
 
 export const paymentTermLabel = (id: PaymentTerm): string =>
   PAYMENT_TERMS.find((t) => t.id === id)?.label ?? id;
+

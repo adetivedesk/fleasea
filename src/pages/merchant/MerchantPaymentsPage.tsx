@@ -63,7 +63,7 @@ export function MerchantPaymentsPage() {
         <EmptyState title="No payments to show" />
       ) : (
         <div className="overflow-x-auto rounded-xl border border-ink-200 bg-white">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[720px] text-sm">
             <thead>
               <tr className="border-b border-ink-200 text-left text-xs uppercase tracking-wide text-ink-400">
                 <th className="px-4 py-2.5 font-medium">Order</th>

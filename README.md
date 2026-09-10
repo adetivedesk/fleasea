@@ -37,11 +37,17 @@ npm install
 ## Commands
 
 ```bash
-npm run dev       # start dev server (http://localhost:5173)
+npm run dev       # start dev server (http://localhost:5173/fleasea/)
 npm run build     # typecheck + production build to dist/
 npm run preview   # preview the production build
 npm run lint      # tsc --noEmit typecheck
 ```
+
+> The app is configured for **GitHub Pages** deployment under a base path:
+> `vite.config.ts` sets `base: '/fleasea/'`, `public/404.html` + a snippet in
+> `index.html` handle SPA deep-link redirects, and `BrowserRouter` uses
+> `basename={import.meta.env.BASE_URL}`. Change `base` (and the repo name) if you
+> deploy elsewhere.
 
 ---
 
@@ -132,10 +138,10 @@ src/
 
 ### Theme
 
-`brand` = **red** (primary actions, branding accent) · `sea` = **aqua/teal water**
-(large surfaces, hero, secondary UI) · `ink` = neutral greys. Defined in
-`tailwind.config.js`. The home page top section is an animated **3D sea-water scene**
-(`WaterHero`) built from CSS/SVG transforms; it honours `prefers-reduced-motion`.
+`brand` = **ocean teal** (`#2b7d99` family) · `sea` = a same-hex alias of `brand`
+· `ink` = neutral greys · `accent` = orange (unused reserve). Defined in
+`tailwind.config.js`. Professional, commercial, seafood-trading tone — strong
+whitespace, cards and tables, minimal decoration.
 
 ### Bilingual + currency
 
@@ -155,11 +161,11 @@ src/
 | 1 | Setup, theme, layout, routing, responsive nav, language, currency, role switcher | ✅ done |
 | 2 | Public site, product preview, product detail, registration + result, mock login | ✅ done |
 | 3 | Merchant dashboard, catalog + filters, product detail (KG/TON), cart, negotiation, profile | ✅ done |
-| 4 | Checkout, payment simulation, orders, shipment, documents, delivery | ⬜ |
-| 5 | Admin dashboard, merchants, products, pricing, inventory | ⬜ |
-| 6 | Admin negotiations, orders, payments, shipments, delivery | ⬜ |
-| 7 | Notifications, reports, settings, role simulation | ⬜ |
-| 8 | Polish, responsive, RTL, empty/error/loading states, a11y, cleanup | ⬜ |
+| 4 | Checkout, 3 payment terms + simulator, orders + detail, shipment tracking, documents (70% lock), payments | ✅ done |
+| 5 | Admin dashboard + charts, merchant approvals + detail tabs, product mgmt + public cap, daily pricing, inventory | ✅ done |
+| 6 | Admin negotiations (counter/accept/reject), orders + status, payments, shipments (create/assign/track), delivery + POD + variance | ✅ done |
+| 7 | Notification center + header bell, reports + CSV export, settings, currency mgmt, users & roles | ✅ done |
+| 8 | Error boundary, responsive tables (min-width + scroll), RTL icon flips, i18n chrome, cleanup | ✅ done |
 
 ---
 

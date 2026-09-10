@@ -1,5 +1,5 @@
 /** Reusable order maths (spec §57) — never inline these in JSX. */
-import { MOCK_SETTINGS } from '@/data/settings';
+import { getSettings } from '@/data/settings';
 import { convertPrice } from '@/utils/currency';
 import type { CartItem, Currency, CurrencyCode, Product } from '@/types';
 
@@ -56,8 +56,8 @@ export function buildCartTotals(
   const deliveryFee =
     lines.length === 0
       ? 0
-      : round2(convertPrice(MOCK_SETTINGS.deliveryFeeSar, 'SAR', currency, currencies));
-  const tax = round2(subtotal * MOCK_SETTINGS.taxRate);
+      : round2(convertPrice(getSettings().deliveryFeeSar, 'SAR', currency, currencies));
+  const tax = round2(subtotal * getSettings().taxRate);
   const total = round2(subtotal + deliveryFee + tax);
   const totalKg = lines.reduce((s, l) => s + l.quantityKg, 0);
 

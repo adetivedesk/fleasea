@@ -21,8 +21,12 @@ interface AppContextValue {
   currency: CurrencyCode;
   setCurrency: (c: CurrencyCode) => void;
   currencies: Currency[];
+  /** Re-read the currency list from storage (after admin edits). */
+  reloadCurrencies: () => void;
   demoRole: DemoRole;
   setDemoRole: (r: DemoRole) => void;
+  adminRole: string;
+  setAdminRole: (r: string) => void;
   /** Convert a SAR-based price into the active display currency. */
   displayPrice: (basePrice: number, baseCurrency: CurrencyCode) => number;
   /** Formatted price string in the active currency, always with unit. */
@@ -49,12 +53,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const r = storage.get<DemoRole>(STORAGE_KEYS.ROLE, 'visitor');
     return VALID_ROLES.includes(r) ? r : 'visitor';
   });
-
-  // Currencies are seeded once; Admin can edit them in a later phase.
-  const currencies = useMemo<Currency[]>(
-    () => storage.get<Currency[]>(STORAGE_KEYS.CURRENCY + '.list', DEFAULT_CURRENCIES),
-    [],
+  const [adminRole, setAdminRoleState] = useState<string>(() =>
+    storage.get<string>(STORAGE_KEYS.ADMIN_ROLE, 'super'),
   );
+
+  const [currencies, setCurrencies] = useState<Currency[]>(() =>
+    storage.get<Currency[]>(STORAGE_KEYS.CURRENCY + '.list', DEFAULT_CURRENCIES),
+  );
+  const reloadCurrencies = useCallback(() => {
+    setCurrencies(storage.get<Currency[]>(STORAGE_KEYS.CURRENCY + '.list', DEFAULT_CURRENCIES));
+  }, []);
 
   useEffect(() => {
     const dir = locale === 'ar' ? 'rtl' : 'ltr';
@@ -75,6 +83,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const setDemoRole = useCallback((r: DemoRole) => {
     setDemoRoleState(r);
     storage.set(STORAGE_KEYS.ROLE, r);
+  }, []);
+
+  const setAdminRole = useCallback((r: string) => {
+    setAdminRoleState(r);
+    storage.set(STORAGE_KEYS.ADMIN_ROLE, r);
   }, []);
 
   const displayPrice = useCallback(
@@ -107,8 +120,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       currency,
       setCurrency,
       currencies,
+      reloadCurrencies,
       demoRole,
       setDemoRole,
+      adminRole,
+      setAdminRole,
       displayPrice,
       formatDisplayPrice,
       resetDemoData,
@@ -119,8 +135,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       currency,
       setCurrency,
       currencies,
+      reloadCurrencies,
       demoRole,
       setDemoRole,
+      adminRole,
+      setAdminRole,
       displayPrice,
       formatDisplayPrice,
       resetDemoData,

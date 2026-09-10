@@ -7,3 +7,4 @@ export { LoadingState, EmptyState, ErrorState } from './states';
 export { SegmentedControl } from './SegmentedControl';
 export { ToastProvider, useToast } from './Toast';
 export { Modal, ConfirmDialog } from './Modal';
+export { Toggle } from './Toggle';

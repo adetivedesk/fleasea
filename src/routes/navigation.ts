@@ -58,6 +58,7 @@ export const ADMIN_NAV: NavItem[] = [
   { to: '/admin/shipments', labelKey: 'nav.admin.shipments', icon: Truck },
   { to: '/admin/delivery', labelKey: 'nav.admin.delivery', icon: Truck },
   { to: '/admin/reports', labelKey: 'nav.admin.reports', icon: BarChart3 },
+  { to: '/admin/notifications', labelKey: 'nav.notifications', icon: Bell },
   { to: '/admin/users', labelKey: 'nav.admin.users', icon: Users },
   { to: '/admin/settings/currencies', labelKey: 'nav.admin.currencies', icon: Coins },
   { to: '/admin/settings', labelKey: 'nav.admin.settings', icon: Settings },
